@@ -14,9 +14,8 @@ import (
 var telegramAPI = fmt.Sprintf("https://api.telegram.org/bot%s", config.TelegramBotToken)
 
 func main() {
-    sendGET()
-    //sendPOST()
-    //log.Printf(escapeText("Here goes [some [testing] long](ya.ru) link"))
+    //sendGET()
+    sendPOST()
 }
 
 func sendGET() {
@@ -42,7 +41,11 @@ func sendPOST() {
         "parse_mode": "MarkdownV2",
         "chat_id": config.TelegramChatID,
         "disable_web_page_preview": "true",
-        "text": escapeText("Here goes [some testing long](ya.ru) link"),
+        "text": fmt.Sprintf(
+            "Here goes [%s](%s) link",
+            escapeText("some [testing] long"),
+            "ya.ru",
+        ),
         //"text": "Here goes [some \\[testing\\] long](ya.ru) link",
     })
 
@@ -70,7 +73,7 @@ func sendPOST() {
 }
 
 func escapeText(title string) string {
-    escSymbols := []string{".", "_", "*", "[", "]", "(", ")", "~", "`", ">", "#", "+", "-", "=", "|", "{", "}", "!"}
+    escSymbols := []string{"_", "*", "[", "]", "(", ")", "~", "`", ">", "#", "+", "-", "=", "|", "{", "}", "!"}
     res := title
     for _, esc := range escSymbols {
         res = strings.Replace(res, esc, "\\"+esc, -1)
