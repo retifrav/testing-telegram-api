@@ -69,7 +69,6 @@ func sendPOST() {
         log.Fatalln(err)
     }
     log.Printf("Response: %s", string(body))
-
 }
 
 func escapeText(title string) string {
